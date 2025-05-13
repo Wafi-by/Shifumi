@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shifumi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .result, .score {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const options = ["pierre", "feuille", "ciseaux"];
+    let rounds = 0, playerWins = 0, computerWins = 0;
+
+    // Création dynamique du contenu
+    const title = document.createElement("h1");
+    title.textContent = "Jeu de Shifumi";
+    document.body.appendChild(title);
+
+    const buttonContainer = document.createElement("div");
+    options.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.textContent = choice.charAt(0).toUpperCase() + choice.slice(1);
+      btn.addEventListener("click", () => playRound(choice));
+      buttonContainer.appendChild(btn);
+    });
+    document.body.appendChild(buttonContainer);
+
+    const resultDiv = document.createElement("div");
+    resultDiv.className = "result";
+    document.body.appendChild(resultDiv);
+
+    const scoreDiv = document.createElement("div");
+    scoreDiv.className = "score";
+    document.body.appendChild(scoreDiv);
+
+    function playRound(playerChoice) {
+      const computerChoice = options[Math.floor(Math.random() * 3)];
+      let result = "";
+
+      if (playerChoice === computerChoice) {
+        result = "Égalité !";
+      } else if (
+        (playerChoice === "pierre" && computerChoice === "ciseaux") ||
+        (playerChoice === "feuille" && computerChoice === "pierre") ||
+        (playerChoice === "ciseaux" && computerChoice === "feuille")
+      ) {
+        result = "Vous gagnez !";
+        playerWins++;
+      } else {
+        result = "L'ordinateur gagne !";
+        computerWins++;
+      }
+
+      rounds++;
+      resultDiv.innerHTML = `
+        Vous avez choisi : <strong>${playerChoice}</strong><br>
+        L'ordinateur a choisi : <strong>${computerChoice}</strong><br>
+        <strong>${result}</strong>
+      `;
+      scoreDiv.innerHTML = `
+        Manches jouées : ${rounds}<br>
+        Victoires joueur : ${playerWins}<br>
+        Victoires ordinateur : ${computerWins}
+      `;
+    }
+  });
+</script>
+
+</body>
+</html>

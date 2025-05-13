@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Shifumi</title>
+    <link rel="stylesheet" href="page.css">
+</head>
+<body>
+    <main>
+        <h1>Jeu Shifumi</h1>
+        <div class="choices">
+            <button onclick="jouer('pierre')">🪨 Pierre</button>
+            <button onclick="jouer('feuille')">📄 Feuille</button>
+            <button onclick="jouer('ciseaux')">✂️ Ciseaux</button>
+        </div>
+        <div class="resultats">
+            <p id="choix-joueur"></p>
+            <p id="choix-ordi"></p>
+            <p id="resultat"></p>
+        </div>
+    </main>
+
+    <script>
+        function jouer(choixJoueur) {
+            const choixPossibles = ['pierre', 'feuille', 'ciseaux'];
+            const choixOrdi = choixPossibles[Math.floor(Math.random() * 3)];
+
+            document.getElementById('choix-joueur').textContent = `Vous avez choisi : ${choixJoueur}`;
+            document.getElementById('choix-ordi').textContent = `L'ordinateur a choisi : ${choixOrdi}`;
+
+            let resultat = '';
+            if (choixJoueur === choixOrdi) {
+                resultat = "Égalité !";
+            } else if (
+                (choixJoueur === 'pierre' && choixOrdi === 'ciseaux') ||
+                (choixJoueur === 'feuille' && choixOrdi === 'pierre') ||
+                (choixJoueur === 'ciseaux' && choixOrdi === 'feuille')
+            ) {
+                resultat = "Vous avez gagné ! 🎉";
+            } else {
+                resultat = "L'ordinateur a gagné 😢";
+            }
+
+            document.getElementById('resultat').textContent = resultat;
+        }
+    </script>
+</body>
+</html>
